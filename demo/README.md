@@ -7,6 +7,7 @@ Install npm and yarn. Run npm and yarn on command line to ensure setup successfu
 Install install-peers to handle install all peer dependencies recursively:
 
 ```sh
+cd demo
 npm install --save-dev --ignore-scripts install-peers
 ```
 

@@ -19,7 +19,10 @@ import dat from 'dat.gui';
 import Stats from 'stats.js';
 
 import {drawBoundingBox, drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI, tryResNetButtonName, tryResNetButtonText, updateTryResNetButtonDatGuiCss} from './demo_util';
-import {setupHeatMap} from './heatmap';
+import {setupHeatMap, updateHeatMap} from './heatmap';
+
+// Testing of Heatmap.js
+import {generateRandomPoints, movePoints} from './heatmap';
 
 const videoWidth = 600;
 const videoHeight = 500;
@@ -282,6 +285,11 @@ function setupFPS() {
   // document.getElementById('main').appendChild(stats.dom);
 }
 
+// Heat map instance
+let heatMapInstance;
+// Testing of heatmap
+let points;
+
 /**
  * Feeds an image to posenet to estimate poses - this is where the magic
  * happens. This function loops with a requestAnimationFrame method.
@@ -436,9 +444,17 @@ function detectPoseInRealTime(video, net) {
       }
     });
 
+    // TODO: Mapping from bounding box to 2d coordinates
+
+
+    // For testing of heatmap.js
+    movePoints(points, videoWidth, videoHeight);
+
+    // Updating heatmap
+    updateHeatMap(heatMapInstance, points);
+
     // End monitoring code for frames per second
     stats.end();
-
     requestAnimationFrame(poseDetectionFrame);
   }
 
@@ -475,7 +491,8 @@ export async function bindPage() {
   // Remove GUI and FPS, set manually for now
   setupGui([], net);
   setupFPS();
-  //setupHeatMap();
+  heatMapInstance = setupHeatMap();
+  points = generateRandomPoints(videoWidth, videoHeight);
   detectPoseInRealTime(video, net);
   document.getElementsByClassName("dg main a")[0].style.visibility = "hidden"
 }
