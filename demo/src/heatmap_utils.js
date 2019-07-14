@@ -70,7 +70,6 @@ function movePoint(direction, point, width, height){
 
 export function generateRandomPoints(width, height){
     let numberOfPoints = 8;
-    console.log(height);
     let points = [];
     for(let i = 0; i < numberOfPoints; ++i){
         // Generate random starting points

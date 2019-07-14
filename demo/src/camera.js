@@ -19,10 +19,11 @@ import dat from 'dat.gui';
 import Stats from 'stats.js';
 
 import {drawBoundingBox, drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI, tryResNetButtonName, tryResNetButtonText, updateTryResNetButtonDatGuiCss} from './demo_util';
-import {setupHeatMap, updateHeatMap} from './heatmap';
+import {setupHeatMap, updateHeatMap} from './heatmap_utils';
+import {SeatingArrangement} from './seats.js'
 
 // Testing of Heatmap.js
-import {generateRandomPoints, movePoints} from './heatmap';
+import {generateRandomPoints, movePoints} from './heatmap_utils';
 
 const videoWidth = 600;
 const videoHeight = 500;
@@ -290,6 +291,24 @@ let heatMapInstance;
 // Testing of heatmap
 let points;
 
+// Seating availability map
+let seats = [
+    {
+        minX: 10,
+        minY: 10,
+        maxX: 200,
+        maxY: 200
+    },
+    {
+        minX: 300,
+        minY: 100,
+        maxX: 500,
+        maxY: 300
+    },
+
+];
+let seatingMap;
+
 /**
  * Feeds an image to posenet to estimate poses - this is where the magic
  * happens. This function loops with a requestAnimationFrame method.
@@ -453,6 +472,9 @@ function detectPoseInRealTime(video, net) {
     // Updating heatmap
     updateHeatMap(heatMapInstance, points);
 
+    //Update seat availability map
+    seatingMap.update(points);
+
     // End monitoring code for frames per second
     stats.end();
     requestAnimationFrame(poseDetectionFrame);
@@ -494,6 +516,7 @@ export async function bindPage() {
   heatMapInstance = setupHeatMap();
   points = generateRandomPoints(videoWidth, videoHeight);
   detectPoseInRealTime(video, net);
+  seatingMap = new SeatingArrangement("../assets/grey.jpg", seats, 5);
   document.getElementsByClassName("dg main a")[0].style.visibility = "hidden"
 }
 
