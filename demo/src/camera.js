@@ -21,7 +21,7 @@ import Stats from "stats.js";
 import {loadVideo} from "./cameraSetup.js";
 import {drawBoundingBox, drawKeypoints, drawSkeleton, toggleLoadingUI, tryResNetButtonName, tryResNetButtonText, updateTryResNetButtonDatGuiCss} from "./demoUtils";
 import {setupHeatMap, updateHeatMap} from "./heatmapUtils";
-import {SeatingArrangement} from "./seats.js"
+import {SeatingArrangement} from "./seats.js";
 
 // Testing of Heatmap.js
 import {generateRandomPoints, movePoints} from "./heatmapUtils";
@@ -479,7 +479,7 @@ export async function bindPage() {
   points = generateRandomPoints(videoWidth, videoHeight);
   detectPoseInRealTime(video, net);
   seatingMap = new SeatingArrangement("../assets/grey.jpg", seats, 5);
-  document.getElementsByClassName("dg main a")[0].style.visibility = "hidden"
+  document.getElementsByClassName("dg main a")[0].style.visibility = "hidden";
 }
 
 navigator.getUserMedia = navigator.getUserMedia ||

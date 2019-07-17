@@ -14,7 +14,7 @@ export function updateHeatMap(heatMapInstance, points){
       x: points[i]["x"],
       y: points[i]["y"],
       value: 80
-    }
+    };
     heatMapPoints.push(point);
   }
   let data = {
