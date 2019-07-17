@@ -18,7 +18,8 @@ import * as posenet from "@tensorflow-models/posenet";
 import dat from "dat.gui";
 import Stats from "stats.js";
 
-import {drawBoundingBox, drawKeypoints, drawSkeleton, toggleLoadingUI, tryResNetButtonName, tryResNetButtonText, updateTryResNetButtonDatGuiCss} from "./demoUtil";
+import {loadVideo} from "./cameraSetup.js";
+import {drawBoundingBox, drawKeypoints, drawSkeleton, toggleLoadingUI, tryResNetButtonName, tryResNetButtonText, updateTryResNetButtonDatGuiCss} from "./demoUtils";
 import {setupHeatMap, updateHeatMap} from "./heatmapUtils";
 import {SeatingArrangement} from "./seats.js"
 
@@ -29,47 +30,9 @@ const videoWidth = 600;
 const videoHeight = 500;
 const stats = new Stats();
 
-/**
- * Loads a the camera to be used in the demo
- *
- */
-async function setupCamera() {
-  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-    throw new Error(
-        "Browser API navigator.mediaDevices.getUserMedia not available");
-  }
-
-  const video = document.getElementById("video");
-  video.width = videoWidth;
-  video.height = videoHeight;
-
-  const stream = await navigator.mediaDevices.getUserMedia({
-    "audio": false,
-    "video": {
-      facingMode: "user",
-      width: videoWidth,
-      height: videoHeight,
-    },
-  });
-  video.srcObject = stream;
-
-  return new Promise((resolve) => {
-    video.onloadedmetadata = () => {
-      resolve(video);
-    };
-  });
-}
-
-async function loadVideo() {
-  const video = await setupCamera();
-  video.play();
-
-  return video;
-}
-
 const defaultQuantBytes = 2;
 
-const defaultMobileNetMultiplier = isMobile() ? 0.50 : 0.75;
+const defaultMobileNetMultiplier = 0.75;
 const defaultMobileNetStride = 16;
 const defaultMobileNetInputResolution = 513;
 
@@ -119,7 +82,7 @@ function setupGui(cameras, net) {
 
   let architectureController = null;
   guiState[tryResNetButtonName] = function() {
-    architectureController.setValue("ResNet50")
+    architectureController.setValue("ResNet50");
   };
   gui.add(guiState, tryResNetButtonName).name(tryResNetButtonText);
   updateTryResNetButtonDatGuiCss();
@@ -429,7 +392,7 @@ function detectPoseInRealTime(video, net) {
           nmsRadius: guiState.multiPoseDetection.nmsRadius
         });
 
-        poses = poses.concat(all_poses);
+        poses = poses.concat(allPoses);
         minPoseConfidence = +guiState.multiPoseDetection.minPoseConfidence;
         minPartConfidence = +guiState.multiPoseDetection.minPartConfidence;
         break;
@@ -500,7 +463,7 @@ export async function bindPage() {
   let video;
 
   try {
-    video = await loadVideo();
+    video = await loadVideo("video", videoWidth, videoHeight);
   } catch (e) {
     let info = document.getElementById("info");
     info.textContent = "this browser does not support video capture," +

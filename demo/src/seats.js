@@ -22,14 +22,12 @@ export class SeatingArrangement {
       chairBlock.style.height = this.seats[i]["maxY"] - this.seats[i]["minY"] + "px";
       chairBlock.style.top  = this.seats[i]["minY"] + "px";
       chairBlock.style.left = this.seats[i]["minX"] + "px";
-      console.log("Chair setup");
     }
     this.element.style.backgroundImage = this.image;
   }
 
   // Checks occupancy and alter maps immediately
   update(points){
-    console.log(this.occupancyTracking[0]);
     for(let i = 0; i < this.seats.length; ++i){
       let onSeat = false;
       for(let j = 0; j < points.length; ++j){
@@ -65,7 +63,6 @@ export class SeatingArrangement {
     } else {
       childElement.style.backgroundColor = "transparent";
     }
-    console.log("Updated!");
   }
 
   inRange(point, idx){

@@ -4,7 +4,6 @@ export function setupHeatMap(){
   let heatmapInstance = HeatmapJS.create({
     container: document.getElementById("map")
   });
-  console.log("Heatmap created");
   return heatmapInstance;
 }
 
@@ -65,7 +64,7 @@ function movePoint(direction, point, width, height){
     default:
       console.log("WARNING: Direction input invalid! (Must be 0-7)");
   }
-  return point
+  return point;
 }
 
 export function generateRandomPoints(width, height){
@@ -77,8 +76,8 @@ export function generateRandomPoints(width, height){
     let y = Math.floor(Math.random() * height);
     let testPoint = {
       direction: i,
-      x: x,
-      y: y
+      x,
+      y
     };
     points.push(testPoint);
   }

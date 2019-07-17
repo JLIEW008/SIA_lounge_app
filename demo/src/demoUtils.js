@@ -14,17 +14,17 @@
  * limitations under the License.
  * =============================================================================
  */
-import * as posenet from '@tensorflow-models/posenet';
-import * as tf from '@tensorflow/tfjs';
+import * as posenet from "@tensorflow-models/posenet";
+import * as tf from "@tensorflow/tfjs";
 
-const color = 'aqua';
-const boundingBoxColor = 'red';
+const color = "aqua";
+const boundingBoxColor = "red";
 const lineWidth = 2;
 
-export const tryResNetButtonName = 'tryResNetButton';
-export const tryResNetButtonText = '[New] Try ResNet50';
-const tryResNetButtonTextCss = 'width:100%;text-decoration:underline;';
-const tryResNetButtonBackgroundCss = 'background:#e61d5f;';
+export const tryResNetButtonName = "tryResNetButton";
+export const tryResNetButtonText = "[New] Try ResNet50";
+const tryResNetButtonTextCss = "width:100%;text-decoration:underline;";
+const tryResNetButtonBackgroundCss = "background:#e61d5f;";
 
 function isAndroid() {
   return /Android/i.test(navigator.userAgent);
@@ -38,13 +38,13 @@ export function isMobile() {
   return isAndroid() || isiOS();
 }
 
-function setDatGuiPropertyCss(propertyText, liCssString, spanCssString = '') {
-  var spans = document.getElementsByClassName('property-name');
+function setDatGuiPropertyCss(propertyText, liCssString, spanCssString = "") {
+  var spans = document.getElementsByClassName("property-name");
   for (var i = 0; i < spans.length; i++) {
     var text = spans[i].textContent || spans[i].innerText;
     if (text == propertyText) {
       spans[i].parentNode.parentNode.style = liCssString;
-      if (spanCssString !== '') {
+      if (spanCssString !== "") {
         spans[i].style = spanCssString;
       }
     }
@@ -53,21 +53,21 @@ function setDatGuiPropertyCss(propertyText, liCssString, spanCssString = '') {
 
 export function updateTryResNetButtonDatGuiCss() {
   setDatGuiPropertyCss(
-      tryResNetButtonText, tryResNetButtonBackgroundCss,
-      tryResNetButtonTextCss);
+    tryResNetButtonText, tryResNetButtonBackgroundCss,
+    tryResNetButtonTextCss);
 }
 
 /**
  * Toggles between the loading UI and the main canvas UI.
  */
 export function toggleLoadingUI(
-    showLoadingUI, loadingDivId = 'loading', mainDivId = 'main') {
+    showLoadingUI, loadingDivId = "loading", mainDivId = "main") {
   if (showLoadingUI) {
-    document.getElementById(loadingDivId).style.display = 'block';
-    document.getElementById(mainDivId).style.display = 'none';
+    document.getElementById(loadingDivId).style.display = "block";
+    document.getElementById(mainDivId).style.display = "none";
   } else {
-    document.getElementById(loadingDivId).style.display = 'none';
-    document.getElementById(mainDivId).style.display = 'block';
+    document.getElementById(loadingDivId).style.display = "none";
+    document.getElementById(mainDivId).style.display = "block";
   }
 }
 
@@ -168,20 +168,20 @@ export async function renderToCanvas(a, ctx) {
 export function renderImageToCanvas(image, size, canvas) {
   canvas.width = size[0];
   canvas.height = size[1];
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext("2d");
 
   ctx.drawImage(image, 0, 0);
 }
 
 /**
  * Draw heatmap values, one of the model outputs, on to the canvas
- * Read our blog post for a description of PoseNet's heatmap outputs
+ * Read our blog post for a description of PoseNet"s heatmap outputs
  * https://medium.com/tensorflow/real-time-human-pose-estimation-in-the-browser-with-tensorflow-js-7dd0bc881cd5
  */
 export function drawHeatMapValues(heatMapValues, outputStride, canvas) {
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext("2d");
   const radius = 5;
-  const scaledValues = heatMapValues.mul(tf.scalar(outputStride, 'int32'));
+  const scaledValues = heatMapValues.mul(tf.scalar(outputStride, "int32"));
 
   drawPoints(ctx, scaledValues, radius, color);
 }
@@ -208,7 +208,7 @@ function drawPoints(ctx, points, radius, color) {
 
 /**
  * Draw offset vector values, one of the model outputs, on to the canvas
- * Read our blog post for a description of PoseNet's offset vector outputs
+ * Read our blog post for a description of PoseNet"s offset vector outputs
  * https://medium.com/tensorflow/real-time-human-pose-estimation-in-the-browser-with-tensorflow-js-7dd0bc881cd5
  */
 export function drawOffsetVectors(
