@@ -255,18 +255,42 @@ let points;
 
 // Seating availability map
 let seats = [
-    {
-        minX: 10,
-        minY: 10,
-        maxX: 200,
-        maxY: 200
-    },
-    {
-        minX: 300,
-        minY: 100,
-        maxX: 500,
-        maxY: 300
-    },
+ {
+      minX: 10,
+      minY: 100,
+      maxX: 100,
+      maxY: 185
+  },
+  {
+    minX: 110,
+    minY: 100,
+    maxX: 200,
+    maxY: 185
+  },
+  {
+    minX: 110,
+    minY: 290,
+    maxX: 200,
+    maxY: 340
+  },    
+  {
+    minX: 10,
+    minY: 290,
+    maxX: 100,
+    maxY: 340
+  },
+  {
+      minX: 300,
+      minY: 125,
+      maxX: 500,
+      maxY: 300
+  },
+  {
+    minX: 100,
+    minY: 50,
+    maxX: 550,
+    maxY: 100
+}
 
 ];
 let seatingMap;
