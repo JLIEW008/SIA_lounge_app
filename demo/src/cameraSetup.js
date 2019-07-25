@@ -9,12 +9,12 @@ async function setupCamera(videoId, width, height) {
   video.height = height;
 
   const stream = await navigator.mediaDevices.getUserMedia({
-    "audio": false,
-    "video": {
+    //"audio": false,
+    "video": true /* {
       facingMode: "user",
       width,
       height
-    },
+    }, */
   });
   video.srcObject = stream;
 
@@ -23,6 +23,7 @@ async function setupCamera(videoId, width, height) {
       resolve(video);
     };
   });
+
 }
 
 export async function loadVideo(videoId, width, height) {

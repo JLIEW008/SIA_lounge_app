@@ -138,6 +138,7 @@ export function drawBoundingBox(keypoints, ctx) {
 
   ctx.strokeStyle = boundingBoxColor;
   ctx.stroke();
+  return [boundingBox.minX, boundingBox.minY, boundingBox.maxX, boundingBox.maxY];
 }
 
 /**

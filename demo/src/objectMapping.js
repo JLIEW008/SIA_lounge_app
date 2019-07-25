@@ -45,14 +45,14 @@ function detectObjectsInRealTime(video, net) {
           objects[i]["class"].length * 10,
           30
         );
-        ctx.fillStyle = "white"
+        ctx.fillStyle = "white";
         ctx.font = "15px Arial";
         ctx.textAlign="center";
         ctx.textBaseline = "middle";
         ctx.fillText(
           objects[i]["class"],
           parseInt(corners[0], 10) + objects[i]["class"].length * 5,
-          parseInt(corners[1] - 30) + 15
+          parseInt(corners[1] - 30, 10) + 15
         );
       }
     }
@@ -62,7 +62,7 @@ function detectObjectsInRealTime(video, net) {
 }
 
 export async function bindPage() {
-  const model = await cocoSsd.load("mobilenet_v1");
+  const model = await cocoSsd.load("mobilenet_v2");
   let video;
 
   try {

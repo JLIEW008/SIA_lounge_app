@@ -21,6 +21,7 @@ import Stats from "stats.js";
 import {loadVideo} from "./cameraSetup.js";
 import {drawBoundingBox, drawKeypoints, drawSkeleton, toggleLoadingUI, tryResNetButtonName, tryResNetButtonText, updateTryResNetButtonDatGuiCss} from "./demoUtils";
 import {setupHeatMap, updateHeatMap} from "./heatmapUtils";
+import {getCenter} from "./mapping.js";
 import {SeatingArrangement} from "./seats.js";
 
 // Testing of Heatmap.js
@@ -272,7 +273,7 @@ let seats = [
     minY: 290,
     maxX: 200,
     maxY: 340
-  },    
+  },
   {
     minX: 10,
     minY: 290,
@@ -435,6 +436,8 @@ function detectPoseInRealTime(video, net) {
     // For each pose (i.e. person) detected in an image, loop through the poses
     // and draw the resulting skeleton and keypoints if over certain confidence
     // scores
+    let points = [];
+    let boundingBox;
     poses.forEach(({score, keypoints}) => {
       if (score >= minPoseConfidence) {
         if (guiState.output.showPoints) {
@@ -444,21 +447,29 @@ function detectPoseInRealTime(video, net) {
           drawSkeleton(keypoints, minPartConfidence, ctx);
         }
         if (guiState.output.showBoundingBox) {
-          drawBoundingBox(keypoints, ctx);
+          boundingBox = drawBoundingBox(keypoints, ctx);
+          points.push(
+            getCenter(
+              boundingBox[0],
+              boundingBox[1],
+              boundingBox[2],
+              boundingBox[3]
+            )
+          );
         }
       }
     });
 
     // TODO: Mapping from bounding box to 2d coordinates
 
-
     // For testing of heatmap.js
-    movePoints(points, videoWidth, videoHeight);
+    //movePoints(points, videoWidth, videoHeight);
 
     // Updating heatmap
     updateHeatMap(heatMapInstance, points);
 
     //Update seat availability map
+    console.log(points);
     seatingMap.update(points);
 
     // End monitoring code for frames per second
