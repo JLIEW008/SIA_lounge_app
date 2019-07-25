@@ -15,7 +15,7 @@ export class SeatingArrangement {
       this.occupancyTracking.push(0);
       let chairBlock = document.createElement("div");
       this.element.appendChild(chairBlock);
-      chairBlock.id = "layer_" + i;
+      chairBlock.id = "layer_" + i; 
       chairBlock.style.position = "absolute";
       chairBlock.style.outline = "2px dashed blue";
       chairBlock.style.width = this.seats[i]["maxX"] - this.seats[i]["minX"] + "px";
