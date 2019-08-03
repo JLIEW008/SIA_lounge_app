@@ -75,7 +75,7 @@ nav {
 
 .navbar {
     justify-content: flex-start;
-    font-size: 30px; 
+    font-size: 30px;
 }
 
 .SIA-logo {
@@ -104,6 +104,7 @@ nav {
 h5 {
     font-weight: bold;
     text-align: center;
+    height: 50px
 }
 
 .card {

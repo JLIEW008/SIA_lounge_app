@@ -254,47 +254,46 @@ let heatMapInstance;
 // Testing of heatmap
 let points;
 
-let numberOfPpl = -1;
+let numOfPpl = -1;
 
 // Seating availability map
 let seats = [
   {
-    minX: 10,
-    minY: 100,
-    maxX: 100,
-    maxY: 185
+    minX: 55,
+    minY: 115,
+    maxX: 140,
+    maxY: 200
   },
   {
-    minX: 110,
-    minY: 100,
-    maxX: 200,
-    maxY: 185
+    minX: 230,
+    minY: 110,
+    maxX: 310,
+    maxY: 195
   },
   {
-    minX: 110,
-    minY: 290,
-    maxX: 200,
-    maxY: 340
-  },
-  {
-    minX: 10,
-    minY: 290,
-    maxX: 100,
-    maxY: 340
-  },
-  {
-    minX: 300,
-    minY: 125,
+    minX: 415,
+    minY: 110,
     maxX: 500,
-    maxY: 300
+    maxY: 195
   },
   {
-    minX: 100,
-    minY: 50,
-    maxX: 550,
-    maxY: 100
+    minX: 15,
+    minY: 335,
+    maxX: 100,
+    maxY: 415
+  },
+  {
+    minX: 240,
+    minY: 335,
+    maxX: 330,
+    maxY: 415
+  },
+  {
+    minX: 480,
+    minY: 335,
+    maxX: 570,
+    maxY: 415
   }
-
 ];
 let seatingMap;
 
@@ -467,19 +466,25 @@ function detectPoseInRealTime(video, net) {
     // For testing of heatmap.js
     //movePoints(points, videoWidth, videoHeight);
 
-    // Updating heatmap
-    numberOfPpl = points.length;
-    console.log(numberOfPpl);
-    ReactDOM.render(e(statusBar, {crowd: numberOfPpl, terminal: 't2-silverkris',id: 'card'},null), document.getElementById('status-bar-t2-silverkris'));
-    ReactDOM.render(e(statusBar, {crowd: 2, terminal: 't2-krisflyergold', id:'card'},null), document.getElementById('status-bar-t2-krisflyergold'));
-    ReactDOM.render(e(statusBar, {crowd: 40, terminal: 't3-silverkris',id:'card'},null), document.getElementById('status-bar-t3-silverkris'));
-    ReactDOM.render(e(statusBar, {crowd: 100, terminal: 't3-krisflyergold', id:'card'},null), document.getElementById('status-bar-t3-krisflyergold'));
-
-    updateHeatMap(heatMapInstance, points);
 
     //Update seat availability map
-    console.log(points);
     seatingMap.update(points);
+    numOfPpl = 0;
+    for(let i = 0; i < seatingMap.occupancyStatus.length; ++i){
+      if(seatingMap.occupancyStatus[i]){
+        numOfPpl++;
+      }
+    }
+
+    ReactDOM.render(e(statusBar, {crowd: numOfPpl, terminal: 't2-silverkris',id: 'card'},null), document.getElementById('status-bar-t2-silverkris'));
+    ReactDOM.render(e(statusBar, {crowd: 0, terminal: 't2-krisflyergold', id:'card'},null), document.getElementById('status-bar-t2-krisflyergold'));
+    ReactDOM.render(e(statusBar, {crowd: 0, terminal: 't3-silverkris',id:'card'},null), document.getElementById('status-bar-t3-silverkris'));
+    ReactDOM.render(e(statusBar, {crowd: 0, terminal: 't3-krisflyergold', id:'card'},null), document.getElementById('status-bar-t3-krisflyergold'));
+
+    // Updating heatmap
+    updateHeatMap(heatMapInstance, points);
+
+
 
     // End monitoring code for frames per second
     stats.end();
@@ -535,27 +540,27 @@ bindPage();
 
 const e = React.createElement;
 
-// import {numberOfPpl} from '../camera';
+// import {numOfPpl} from '../camera';
 
 const card = (props) => {
     if(props.crowd > 2){
         return(
-            e('div', {className: 'alert alert-danger card', role: 'alert'}, 
+            e('div', {className: 'alert alert-danger card', role: 'alert'},
             [
                 e('h5', null, `${props.terminal}`),
-                e('h6', null, `Occupancy: ${props.crowd}`),
-                e('h6', null, `Seats Available: ${props.vacancy - props.crowd}`)
+                e('h6', null, `Seats Occupied: ${props.crowd}`),
+                e('h6', null, `Seats Vacancy: ${props.vacancy - props.crowd}`)
             ])
-        );    
+        );
     } else {
         return(
-            e('div', {className: 'alert alert-success card', role: 'alert'}, 
+            e('div', {className: 'alert alert-success card', role: 'alert'},
             [
                 e('h5', null, `${props.terminal}`),
-                e('h6', null, `Occupancy: ${props.crowd}`),
-                e('h6', null, `Seats Available: ${props.vacancy- props.crowd}`)
+                e('h6', null, `Seats Occupied: ${props.crowd}`),
+                e('h6', null, `Seats Vacancy: ${props.vacancy- props.crowd}`)
             ])
-        );    
+        );
     }
 }
 
@@ -571,14 +576,14 @@ class statusBar extends React.Component {
       // console.log(nextProps)
       this.setState({crowd: nextProps.crowd})
     }
-  
+
 
     render() {
 
       console.log(this.state.crowd)
         if(this.state.terminal == 't2-silverkris') {
             return(
-                e(card, {crowd: this.state.crowd, terminal: "Terminal 2: Silverkris", vacancy: 5}, null)
+                e(card, {crowd: this.state.crowd, terminal: "Terminal 2: Silverkris", vacancy: 6}, null)
             );
         } else if(this.state.terminal == 't2-krisflyergold') {
             return(
