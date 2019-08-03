@@ -1,0 +1,14 @@
+.page-header {
+    background: #00266b;
+    align-content: center;
+    padding: 2rem;
+    color: white;
+}
+
+img {
+    float: left;
+    background-color: #00266b;
+    max-width: 200px;
+    max-height: 300px;
+}
+

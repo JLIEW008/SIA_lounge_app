@@ -18,14 +18,14 @@ import * as posenet from "@tensorflow-models/posenet";
 import dat from "dat.gui";
 import Stats from "stats.js";
 
-import {loadVideo} from "./cameraSetup.js";
-import {drawBoundingBox, drawKeypoints, drawSkeleton, toggleLoadingUI, tryResNetButtonName, tryResNetButtonText, updateTryResNetButtonDatGuiCss} from "./demoUtils";
-import {setupHeatMap, updateHeatMap} from "./heatmapUtils";
-import {getCenter} from "./mapping.js";
-import {SeatingArrangement} from "./seats.js";
+import { loadVideo } from "./cameraSetup.js";
+import { drawBoundingBox, drawKeypoints, drawSkeleton, toggleLoadingUI, tryResNetButtonName, tryResNetButtonText, updateTryResNetButtonDatGuiCss } from "./demoUtils";
+import { setupHeatMap, updateHeatMap } from "./heatmapUtils";
+import { getCenter } from "./mapping.js";
+import { SeatingArrangement } from "./seats.js";
 
 // Testing of Heatmap.js
-import {generateRandomPoints, movePoints} from "./heatmapUtils";
+import { generateRandomPoints, movePoints } from "./heatmapUtils";
 
 const videoWidth = 600;
 const videoHeight = 500;
@@ -79,10 +79,10 @@ function setupGui(cameras, net) {
     guiState.camera = cameras[0].deviceId;
   }
 
-  const gui = new dat.GUI({width: 300});
+  const gui = new dat.GUI({ width: 300 });
 
   let architectureController = null;
-  guiState[tryResNetButtonName] = function() {
+  guiState[tryResNetButtonName] = function () {
     architectureController.setValue("ResNet50");
   };
   gui.add(guiState, tryResNetButtonName).name(tryResNetButtonText);
@@ -92,7 +92,7 @@ function setupGui(cameras, net) {
   // person to be in the frame or results will be innaccurate. Multi-pose works
   // for more than 1 person
   const algorithmController =
-      gui.add(guiState, "algorithm", ["single-pose", "multi-pose"]);
+    gui.add(guiState, "algorithm", ["single-pose", "multi-pose"]);
 
   // The input parameters have the most effect on accuracy and speed of the
   // network
@@ -101,15 +101,15 @@ function setupGui(cameras, net) {
   // accuracy. 1.01 is the largest, but will be the slowest. 0.50 is the
   // fastest, but least accurate.
   architectureController =
-      input.add(guiState.input, "architecture", ["MobileNetV1", "ResNet50"]);
+    input.add(guiState.input, "architecture", ["MobileNetV1", "ResNet50"]);
   guiState.architecture = guiState.input.architecture;
   // Input resolution:  Internally, this parameter affects the height and width
   // of the layers in the neural network. The higher the value of the input
   // resolution the better the accuracy but slower the speed.
   let inputResolutionController = null;
   function updateGuiInputResolution(
-      inputResolution,
-      inputResolutionArray,
+    inputResolution,
+    inputResolutionArray,
   ) {
     if (inputResolutionController) {
       inputResolutionController.remove();
@@ -117,8 +117,8 @@ function setupGui(cameras, net) {
     guiState.inputResolution = inputResolution;
     guiState.input.inputResolution = inputResolution;
     inputResolutionController =
-        input.add(guiState.input, "inputResolution", inputResolutionArray);
-    inputResolutionController.onChange(function(inputResolution) {
+      input.add(guiState.input, "inputResolution", inputResolutionArray);
+    inputResolutionController.onChange(function (inputResolution) {
       guiState.changeToInputResolution = inputResolution;
     });
   }
@@ -135,8 +135,8 @@ function setupGui(cameras, net) {
     guiState.outputStride = outputStride;
     guiState.input.outputStride = outputStride;
     outputStrideController =
-        input.add(guiState.input, "outputStride", outputStrideArray);
-    outputStrideController.onChange(function(outputStride) {
+      input.add(guiState.input, "outputStride", outputStrideArray);
+    outputStrideController.onChange(function (outputStride) {
       guiState.changeToOutputStride = outputStride;
     });
   }
@@ -152,8 +152,8 @@ function setupGui(cameras, net) {
     guiState.multiplier = multiplier;
     guiState.input.multiplier = multiplier;
     multiplierController =
-        input.add(guiState.input, "multiplier", multiplierArray);
-    multiplierController.onChange(function(multiplier) {
+      input.add(guiState.input, "multiplier", multiplierArray);
+    multiplierController.onChange(function (multiplier) {
       guiState.changeToMultiplier = multiplier;
     });
   }
@@ -170,8 +170,8 @@ function setupGui(cameras, net) {
     guiState.quantBytes = +quantBytes;
     guiState.input.quantBytes = +quantBytes;
     quantBytesController =
-        input.add(guiState.input, "quantBytes", quantBytesArray);
-    quantBytesController.onChange(function(quantBytes) {
+      input.add(guiState.input, "quantBytes", quantBytesArray);
+    quantBytesController.onChange(function (quantBytes) {
       guiState.changeToQuantBytes = +quantBytes;
     });
   }
@@ -179,12 +179,12 @@ function setupGui(cameras, net) {
   function updateGui() {
     if (guiState.input.architecture === "MobileNetV1") {
       updateGuiInputResolution(
-          defaultMobileNetInputResolution, [257, 353, 449, 513, 801]);
+        defaultMobileNetInputResolution, [257, 353, 449, 513, 801]);
       updateGuiOutputStride(defaultMobileNetStride, [8, 16]);
       updateGuiMultiplier(defaultMobileNetMultiplier, [0.50, 0.75, 1.0]);
     } else {  // guiState.input.architecture === "ResNet50"
       updateGuiInputResolution(
-          defaultResNetInputResolution, [257, 353, 449, 513, 801]);
+        defaultResNetInputResolution, [257, 353, 449, 513, 801]);
       updateGuiOutputStride(defaultResNetStride, [32, 16]);
       updateGuiMultiplier(defaultResNetMultiplier, [1.0]);
     }
@@ -203,9 +203,9 @@ function setupGui(cameras, net) {
 
   let multi = gui.addFolder("Multi Pose Detection");
   multi.add(guiState.multiPoseDetection, "maxPoseDetections")
-      .min(1)
-      .max(20)
-      .step(1);
+    .min(1)
+    .max(20)
+    .step(1);
   multi.add(guiState.multiPoseDetection, "minPoseConfidence", 0.0, 1.0);
   multi.add(guiState.multiPoseDetection, "minPartConfidence", 0.0, 1.0);
   // nms Radius: controls the minimum distance between poses that are returned
@@ -221,13 +221,13 @@ function setupGui(cameras, net) {
   output.open();
 
 
-  architectureController.onChange(function(architecture) {
+  architectureController.onChange(function (architecture) {
     // if architecture is ResNet50, then show ResNet50 options
     updateGui();
     guiState.changeToArchitecture = architecture;
   });
 
-  algorithmController.onChange(function(value) {
+  algorithmController.onChange(function (value) {
     switch (guiState.algorithm) {
       case "single-pose":
         multi.close();
@@ -254,13 +254,15 @@ let heatMapInstance;
 // Testing of heatmap
 let points;
 
+let numberOfPpl = -1;
+
 // Seating availability map
 let seats = [
- {
-      minX: 10,
-      minY: 100,
-      maxX: 100,
-      maxY: 185
+  {
+    minX: 10,
+    minY: 100,
+    maxX: 100,
+    maxY: 185
   },
   {
     minX: 110,
@@ -281,17 +283,17 @@ let seats = [
     maxY: 340
   },
   {
-      minX: 300,
-      minY: 125,
-      maxX: 500,
-      maxY: 300
+    minX: 300,
+    minY: 125,
+    maxX: 500,
+    maxY: 300
   },
   {
     minX: 100,
     minY: 50,
     maxX: 550,
     maxY: 100
-}
+  }
 
 ];
 let seatingMap;
@@ -438,7 +440,7 @@ function detectPoseInRealTime(video, net) {
     // scores
     let points = [];
     let boundingBox;
-    poses.forEach(({score, keypoints}) => {
+    poses.forEach(({ score, keypoints }) => {
       if (score >= minPoseConfidence) {
         if (guiState.output.showPoints) {
           drawKeypoints(keypoints, minPartConfidence, ctx);
@@ -466,6 +468,13 @@ function detectPoseInRealTime(video, net) {
     //movePoints(points, videoWidth, videoHeight);
 
     // Updating heatmap
+    numberOfPpl = points.length;
+    console.log(numberOfPpl);
+    ReactDOM.render(e(statusBar, {crowd: numberOfPpl, terminal: 't2-silverkris',id: 'card'},null), document.getElementById('status-bar-t2-silverkris'));
+    ReactDOM.render(e(statusBar, {crowd: 2, terminal: 't2-krisflyergold', id:'card'},null), document.getElementById('status-bar-t2-krisflyergold'));
+    ReactDOM.render(e(statusBar, {crowd: 40, terminal: 't3-silverkris',id:'card'},null), document.getElementById('status-bar-t3-silverkris'));
+    ReactDOM.render(e(statusBar, {crowd: 100, terminal: 't3-krisflyergold', id:'card'},null), document.getElementById('status-bar-t3-krisflyergold'));
+
     updateHeatMap(heatMapInstance, points);
 
     //Update seat availability map
@@ -502,7 +511,7 @@ export async function bindPage() {
   } catch (e) {
     let info = document.getElementById("info");
     info.textContent = "this browser does not support video capture," +
-        "or this device does not have a camera";
+      "or this device does not have a camera";
     info.style.display = "block";
     throw e;
   }
@@ -513,11 +522,76 @@ export async function bindPage() {
   heatMapInstance = setupHeatMap();
   points = generateRandomPoints(videoWidth, videoHeight);
   detectPoseInRealTime(video, net);
-  seatingMap = new SeatingArrangement("../assets/grey.jpg", seats, 5);
+  seatingMap = new SeatingArrangement("../assets/seatingplan.jpg", seats, 5);
   document.getElementsByClassName("dg main a")[0].style.visibility = "hidden";
 }
 
 navigator.getUserMedia = navigator.getUserMedia ||
-    navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+  navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 // kick off the demo
 bindPage();
+
+'use strict';
+
+const e = React.createElement;
+
+// import {numberOfPpl} from '../camera';
+
+const card = (props) => {
+    if(props.crowd > 2){
+        return(
+            e('div', {className: 'alert alert-danger card', role: 'alert'}, 
+            [
+                e('h5', null, `${props.terminal}`),
+                e('h6', null, `Occupancy: ${props.crowd}`),
+                e('h6', null, `Seats Available: ${'Variable here :)'}`)
+            ])
+        );    
+    } else {
+        return(
+            e('div', {className: 'alert alert-success card', role: 'alert'}, 
+            [
+                e('h5', null, `${props.terminal}`),
+                e('h6', null, `Occupancy: ${props.crowd}`),
+                e('h6', null, `Seats Available: ${'Variable here :)'}`)
+            ])
+        );    
+    }
+}
+
+class statusBar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state ={
+            crowd: props.crowd,
+            terminal: props.terminal
+        }
+    }
+    componentWillReceiveProps(nextProps) {
+      // console.log(nextProps)
+      this.setState({crowd: nextProps.crowd})
+    }
+  
+
+    render() {
+
+      console.log(this.state.crowd)
+        if(this.state.terminal == 't2-silverkris') {
+            return(
+                e(card, {crowd: this.state.crowd, terminal: "Terminal 2: Silverkris"}, null)
+            );
+        } else if(this.state.terminal == 't2-krisflyergold') {
+            return(
+                e(card, {crowd: this.state.crowd, terminal: "Terminal 2: KrisFlyer Gold"}, null)
+            );
+        } else if(this.state.terminal == 't3-silverkris') {
+            return(
+                e(card, {crowd: this.state.crowd, terminal: "Terminal 3: Silverkris"}, null)
+            );
+        } else if(this.state.terminal == 't3-krisflyergold') {
+            return(
+                e(card, {crowd: this.state.crowd, terminal: "Terminal 3: KrisFlyer Gold"}, null)
+            );
+        }
+    }
+}

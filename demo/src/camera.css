@@ -63,4 +63,49 @@
 
 .spinner-text {
     float: left;
+    /* padding: 1em; */
+}
+
+nav {
+    background-color: #00266b;
+    align-content: left;
+    padding: 2em;
+    color: white;
+}
+
+.navbar {
+    justify-content: flex-start;
+    font-size: 30px; 
+}
+
+.SIA-logo {
+    padding: 10px;
+    float: left;
+    background-color: #00266b;
+    max-width: 200px;
+    max-height: 300px;
+}
+
+.navbar-brand {
+    color: white;
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+
+}
+
+.d-inline-block {
+    margin: 1rem;
+}
+
+.row {
+    padding: 15px;
+}
+
+h5 {
+    font-weight: bold;
+    text-align: center;
+}
+
+.card {
+    padding: 20px;
 }
