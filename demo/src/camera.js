@@ -544,7 +544,7 @@ const card = (props) => {
             [
                 e('h5', null, `${props.terminal}`),
                 e('h6', null, `Occupancy: ${props.crowd}`),
-                e('h6', null, `Seats Available: ${'Variable here :)'}`)
+                e('h6', null, `Seats Available: ${props.vacancy - props.crowd}`)
             ])
         );    
     } else {
@@ -553,7 +553,7 @@ const card = (props) => {
             [
                 e('h5', null, `${props.terminal}`),
                 e('h6', null, `Occupancy: ${props.crowd}`),
-                e('h6', null, `Seats Available: ${'Variable here :)'}`)
+                e('h6', null, `Seats Available: ${props.vacancy- props.crowd}`)
             ])
         );    
     }
@@ -578,19 +578,19 @@ class statusBar extends React.Component {
       console.log(this.state.crowd)
         if(this.state.terminal == 't2-silverkris') {
             return(
-                e(card, {crowd: this.state.crowd, terminal: "Terminal 2: Silverkris"}, null)
+                e(card, {crowd: this.state.crowd, terminal: "Terminal 2: Silverkris", vacancy: 5}, null)
             );
         } else if(this.state.terminal == 't2-krisflyergold') {
             return(
-                e(card, {crowd: this.state.crowd, terminal: "Terminal 2: KrisFlyer Gold"}, null)
+                e(card, {crowd: this.state.crowd, terminal: "Terminal 2: KrisFlyer Gold", vacancy: 60}, null)
             );
         } else if(this.state.terminal == 't3-silverkris') {
             return(
-                e(card, {crowd: this.state.crowd, terminal: "Terminal 3: Silverkris"}, null)
+                e(card, {crowd: this.state.crowd, terminal: "Terminal 3: Silverkris", vacancy: 40}, null)
             );
         } else if(this.state.terminal == 't3-krisflyergold') {
             return(
-                e(card, {crowd: this.state.crowd, terminal: "Terminal 3: KrisFlyer Gold"}, null)
+                e(card, {crowd: this.state.crowd, terminal: "Terminal 3: KrisFlyer Gold", vacancy: 150}, null)
             );
         }
     }
