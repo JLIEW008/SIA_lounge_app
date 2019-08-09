@@ -472,7 +472,7 @@ function detectPoseInRealTime(video, net) {
     console.log(numberOfPpl);
     ReactDOM.render(e(statusBar, {crowd: numberOfPpl, terminal: 't2-silverkris',id: 'card'},null), document.getElementById('status-bar-t2-silverkris'));
     ReactDOM.render(e(statusBar, {crowd: 2, terminal: 't2-krisflyergold', id:'card'},null), document.getElementById('status-bar-t2-krisflyergold'));
-    ReactDOM.render(e(statusBar, {crowd: 40, terminal: 't3-silverkris',id:'card'},null), document.getElementById('status-bar-t3-silverkris'));
+    ReactDOM.render(e(statusBar, {crowd: numberOfPpl, terminal: 't3-silverkris',id:'card'},null), document.getElementById('status-bar-t3-silverkris'));
     ReactDOM.render(e(statusBar, {crowd: 100, terminal: 't3-krisflyergold', id:'card'},null), document.getElementById('status-bar-t3-krisflyergold'));
 
     updateHeatMap(heatMapInstance, points);
@@ -578,7 +578,7 @@ class statusBar extends React.Component {
       console.log(this.state.crowd)
         if(this.state.terminal == 't2-silverkris') {
             return(
-                e(card, {crowd: this.state.crowd, terminal: "Terminal 2: Silverkris", vacancy: 5}, null)
+                e(card, {crowd: this.state.crowd, terminal: "Terminal 2: Silverkris", vacancy: 10}, null)
             );
         } else if(this.state.terminal == 't2-krisflyergold') {
             return(
