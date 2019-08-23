@@ -10,7 +10,7 @@ Kris.ai is an application which tackles multiple challenges pertaining to SIA lo
 ### Identification of lounges with more available spaces (Passenger)
 Before arrival at the airport (inbound/outbound), passengers seeking to use any of SIA lounges can visit the website to find a lounge with available spaces.  
 ---Image of space availability here---
-![]("./demo/src/Singapore_Airlines_logo_blue.png")
+[Logo]("./demo/src/Singapore_Airlines_logo_blue.png")
 
 ### Identification of available spaces (Staff)
 Upon arrival at the lounge, the staff can recommend free spaces to accomodate groups of passengers, or recommend quiter regions with lesser people.  
