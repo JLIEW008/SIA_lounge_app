@@ -466,18 +466,6 @@ function detectPoseInRealTime(video, net) {
     // For testing of heatmap.js
     //movePoints(points, videoWidth, videoHeight);
 
-<<<<<<< HEAD
-    // Updating heatmap
-    numberOfPpl = points.length;
-    console.log(numberOfPpl);
-    ReactDOM.render(e(statusBar, { crowd: numberOfPpl, terminal: 't2-silverkris', id: 'card' }, null), document.getElementById('status-bar-t2-silverkris'));
-    ReactDOM.render(e(statusBar, { crowd: 2, terminal: 't2-krisflyergold', id: 'card' }, null), document.getElementById('status-bar-t2-krisflyergold'));
-    ReactDOM.render(e(statusBar, { crowd: numberOfPpl, terminal: 't3-silverkris', id: 'card' }, null), document.getElementById('status-bar-t3-silverkris'));
-    ReactDOM.render(e(statusBar, { crowd: 100, terminal: 't3-krisflyergold', id: 'card' }, null), document.getElementById('status-bar-t3-krisflyergold'));
-
-    updateHeatMap(heatMapInstance, points);
-=======
->>>>>>> 51448198e337a63118a2aad01a79a082db084e72
 
     //Update seat availability map
     seatingMap.update(points);
@@ -487,11 +475,21 @@ function detectPoseInRealTime(video, net) {
         numOfPpl++;
       }
     }
+    const t2silverkris = document.getElementById('status-bar-t2-silverkris')
+    const t2krisflyergold =document.getElementById('status-bar-t2-krisflyergold')
+    const t3silverkris = document.getElementById('status-bar-t3-silverkris')
+    const t3krisflyergold = document.getElementById('status-bar-t3-krisflyergold')
 
-    ReactDOM.render(e(statusBar, { crowd: numOfPpl, terminal: 't2-silverkris', id: 'card' }, null), document.getElementById('status-bar-t2-silverkris'));
-    ReactDOM.render(e(statusBar, { crowd: 0, terminal: 't2-krisflyergold', id: 'card' }, null), document.getElementById('status-bar-t2-krisflyergold'));
-    ReactDOM.render(e(statusBar, { crowd: 0, terminal: 't3-silverkris', id: 'card' }, null), document.getElementById('status-bar-t3-silverkris'));
-    ReactDOM.render(e(statusBar, { crowd: 0, terminal: 't3-krisflyergold', id: 'card' }, null), document.getElementById('status-bar-t3-krisflyergold'));
+    if (t2silverkris)  ReactDOM.render(e(statusBar, { crowd: numOfPpl, terminal: 't2-silverkris', id: 'card' }, null), document.getElementById('status-bar-t2-silverkris'));
+    else if (t2krisflyergold) ReactDOM.render(e(statusBar, { crowd: 0, terminal: 't2-krisflyergold', id: 'card' }, null), document.getElementById('status-bar-t2-krisflyergold'));
+    else if (t3silverkris)  ReactDOM.render(e(statusBar, { crowd: 0, terminal: 't3-silverkris', id: 'card' }, null), document.getElementById('status-bar-t3-silverkris'));
+    else if (t3krisflyergold) ReactDOM.render(e(statusBar, { crowd: 0, terminal: 't3-krisflyergold', id: 'card' }, null), document.getElementById('status-bar-t3-krisflyergold'));
+
+
+   
+    
+   
+    
 
     // Updating heatmap
     updateHeatMap(heatMapInstance, points);
@@ -592,7 +590,6 @@ class statusBar extends React.Component {
 
   render() {
 
-    console.log(this.state.crowd)
     if (this.state.terminal == 't2-silverkris') {
       return (
         e(card, { crowd: this.state.crowd, terminal: "Terminal 2: Silverkris", vacancy: 6 }, null)

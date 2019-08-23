@@ -1,0 +1,18 @@
+.header-styles {
+    margin-left: 20px;
+    margin-top: 1rem;
+}
+
+.center-col {
+    justify-content: center;
+    margin: 1%;
+}
+
+.header-design {
+    background-color: #00266b;
+    height: 90px;
+    margin: 0;
+    position: relative;
+    margin-bottom: 1.5%;
+}
+
