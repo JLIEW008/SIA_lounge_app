@@ -9,19 +9,19 @@ Kris.ai is an application which tackles multiple challenges pertaining to SIA lo
 
 ### Identification of lounges with more available spaces (Passenger)
 Before arrival at the airport (inbound/outbound), passengers seeking to use any of SIA lounges can visit the website to find a lounge with available spaces.  
----Image of space availability here---
+![Available Spaces](https://github.com/JLIEW008/SIA_lounge_app/blob/master/Available%20Spaces.PNG)
 
 ### Identification of available spaces (Staff)
 Upon arrival at the lounge, the staff can recommend free spaces to accomodate groups of passengers, or recommend quiter regions with lesser people.  
---- Image of heatmap etc here ---
+![Space Availability](https://github.com/JLIEW008/SIA_lounge_app/blob/master/Space%20Availability.PNG)
 
 ### Food Details
 Passengers can check out the food available at the respective lounges and their nutritional information.  
---- Image of nutritional information ---
+![Food Ordering](https://github.com/JLIEW008/SIA_lounge_app/blob/master/Menu.PNG)
 
 ### Food Ordering
 When in the lounge, passengers can scan the QR code at their seats, order the food and have it served to them.  
---- Image of Food Ordering Page ---
+![Food Ordering](https://github.com/JLIEW008/SIA_lounge_app/blob/master/Food%20Ordering.PNG)
 
 ## Setup
 Please head over to the repective packages' README for more information on the setup
