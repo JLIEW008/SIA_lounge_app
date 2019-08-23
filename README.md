@@ -4,6 +4,7 @@ Built for SIA App Challenge 2019
 
 ## Description
 Kris.ai is an application which tackles multiple challenges pertaining to SIA lounges. It is centered around the use of Computer Vision (Object Detection), which builds on current infrastructure to minimise cost while reaping the potential benefits of improving overall customer experience in the lounges.
+![Homepage KrisFlyer Gold Terminal 2]("https://image.shutterstock.com/image-photo/mountains-during-sunset-beautiful-natural-260nw-407021107.jpg")
 
 ## Functionalities
 
